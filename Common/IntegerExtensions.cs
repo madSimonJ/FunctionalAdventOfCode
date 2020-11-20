@@ -8,5 +8,8 @@ namespace Common
     {
         public static bool InRange(this int @this, int start, int end) =>
             @this >= start && @this <= end;
+
+        public static char ToChar(this uint @this) =>
+            Convert.ToChar(@this);
     }
 }

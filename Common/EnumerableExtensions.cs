@@ -78,5 +78,14 @@ namespace Common
             }
             return false;
         }
+
+        public static int Blah<T>(this IEnumerable<T> @this) => 3;
+        public static int Blah2<T>(this T @this) => 3;
+
+        public static IEnumerable<T> Replace<T>(this IEnumerable<T> @this, Func<T, bool> predicate, T replacement) =>
+            @this.Select(x =>
+                predicate(x)
+                    ? replacement
+                    : x);
     }
 }

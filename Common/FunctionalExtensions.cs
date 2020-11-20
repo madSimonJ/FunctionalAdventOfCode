@@ -13,5 +13,6 @@ namespace Common
 
         public static bool Validate<T>(this T @this, params Func<T, bool>[] predicates) =>
             predicates.All(x => x(@this));
+
     }
 }
