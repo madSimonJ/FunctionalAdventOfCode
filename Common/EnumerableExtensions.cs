@@ -26,6 +26,20 @@ namespace Common
             return returnValue;
         }
 
+        public static TOut AggregateAdjacent<TIn, TOut>(this IEnumerable<TIn> @this, TOut seed, Func<TOut, TIn, TIn, TOut> f)
+        {
+            var e = @this.GetEnumerator();
+            e.MoveNext();
+            TOut iterate(TOut currTotal)
+            {
+                var prev = e.Current;
+                return e.MoveNext()
+                                    ? iterate(f(currTotal, prev, e.Current))
+                                    : currTotal;
+            }
+            return iterate(seed);
+        }
+
         public static string Join<T>(this IEnumerable<T> @this) =>
             string.Join("", @this.Select(x => x.ToString()));
 
@@ -79,13 +93,37 @@ namespace Common
             return false;
         }
 
-        public static int Blah<T>(this IEnumerable<T> @this) => 3;
-        public static int Blah2<T>(this T @this) => 3;
-
         public static IEnumerable<T> Replace<T>(this IEnumerable<T> @this, Func<T, bool> predicate, T replacement) =>
             @this.Select(x =>
                 predicate(x)
                     ? replacement
                     : x);
+
+        public static IEnumerable<T> Except<T>(this IEnumerable<T> @this, T itemToExcemt) =>
+            @this.Where(x => !EqualityComparer<T>.Default.Equals(x, itemToExcemt));
+
+        public static IEnumerable<(T, T)> Permutate<T>(this IEnumerable<T> source)
+        {
+            var sourceArray = source.ToArray();
+            var returnVal = sourceArray.SelectMany((sourceX, sourceI) => {
+                var recordsToMerge = sourceArray.Where((mergeX, mergeI) => mergeI > sourceI && sourceX.NotEq(mergeX));
+                return recordsToMerge.Select(x => (sourceX, x));
+            });
+            return returnVal;
+        }
+
+        public static IEnumerable<IEnumerable<T>> PermutateRoutes<T>(this IEnumerable<T> @this)
+        {
+            return permutateRoutes(Enumerable.Empty<T>(), @this);
+            IEnumerable<IEnumerable<T>> permutateRoutes(IEnumerable<T> done, IEnumerable<T> toDo) =>
+                !toDo.Any()
+                    ? new[] { done }
+                    : toDo.SelectMany(x =>
+                        permutateRoutes(
+                                        done.Append(x),
+                                        toDo.Except(x)
+                        )
+                    );
+        }
     }
 }

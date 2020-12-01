@@ -41,7 +41,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Content2\Day08.txt">
+    <None Update="Content2\2015\Day08.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content2\2015\Day09.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content2\2020\Day01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Content\Day02.txt">

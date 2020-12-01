@@ -14,5 +14,21 @@ namespace Common
         public static bool Validate<T>(this T @this, params Func<T, bool>[] predicates) =>
             predicates.All(x => x(@this));
 
+        public static bool Eq<T>(this T @this, T OtherThing) =>
+            EqualityComparer<T>.Default.Equals(@this, OtherThing);
+
+        public static bool NotEq<T>(this T @this, T OtherThing) =>
+            !@this.Eq(OtherThing);
+
+        public static T ApplyXTimes<T>(this T seed, int times, Func<T, T> f)
+        {
+            var r = seed;
+            for (int i = 0; i < times; i++)
+            {
+                r = f(r);
+            }
+            return r;
+        }
+
     }
 }
