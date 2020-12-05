@@ -125,5 +125,11 @@ namespace Common
                         )
                     );
         }
+
+        public static IEnumerable<T> TakeLowerHalf<T>(this IEnumerable<T> @this) =>
+            @this.Take(@this.Count() / 2);
+
+        public static IEnumerable<T> TakeUpperHalf<T>(this IEnumerable<T> @this) =>
+            @this.Skip(@this.Count() / 2);
     }
 }
