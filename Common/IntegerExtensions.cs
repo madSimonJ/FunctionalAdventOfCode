@@ -11,5 +11,8 @@ namespace Common
 
         public static char ToChar(this uint @this) =>
             Convert.ToChar(@this);
+
+        public static bool IsDivisibleBy(this int @this, int intToBeDivisibleBy) =>
+            @this % intToBeDivisibleBy == 0;
     }
 }

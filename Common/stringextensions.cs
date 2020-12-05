@@ -36,5 +36,13 @@ namespace Common
 
         public static string RemoveWhitespace(this string @this) => 
             Regex.Replace(@this, @"\s+", "");
+
+        public static char GetCharOrDefault(this string @this, int pos) =>
+            pos + 1 > @this.Length
+                    ? default
+                    : @this[pos];
+
+        public static string EndChars(this string @this, int noChars) =>
+            @this[^noChars..];
     }
 }

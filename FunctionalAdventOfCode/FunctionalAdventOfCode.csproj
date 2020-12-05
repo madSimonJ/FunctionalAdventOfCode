@@ -50,6 +50,15 @@
     <None Update="Content2\2020\Day01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Content2\2020\Day02.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content2\2020\Day03.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content2\2020\Day04.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Content\Day02.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
