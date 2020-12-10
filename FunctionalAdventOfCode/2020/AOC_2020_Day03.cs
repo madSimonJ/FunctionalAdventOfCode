@@ -76,7 +76,6 @@ namespace FunctionalAdventOfCode._2020
         public void AOC_2020_Day03b()
         {
             var input = File.ReadAllText(".//Content2//2020/Day03.txt");
-            //var answer = AOC_2020_Day03_Answer.CountTrees(input);
             var answers = new[]
             {
                 AOC_2020_Day03_Answer.CountTreesForSlopeX(input, 1, 1),

@@ -43,6 +43,24 @@ namespace Common
         public static string Join<T>(this IEnumerable<T> @this) =>
             string.Join("", @this.Select(x => x.ToString()));
 
+
+
+        public static bool AllAdjacent<T>(this IEnumerable<T> @this, Func<T, T, bool> predicate)
+        {
+            var enumerator = @this.GetEnumerator();
+            enumerator.MoveNext();
+            var prev = enumerator.Current;
+
+            while (enumerator.MoveNext())
+            {
+                if (!predicate(prev, enumerator.Current))
+                    return false;
+                prev = enumerator.Current;
+            }
+            return true;
+        }
+
+
         public static bool AnyAdjacent<T>(this IEnumerable<T> @this, Func<T, T, bool> predicate)
         {
             var enumerator = @this.GetEnumerator();
@@ -75,6 +93,23 @@ namespace Common
             return false;
         }
 
+        public static int CountAdjacent<T>(this IEnumerable<T> @this, Func<T, T, bool> predicate)
+        {
+            var enumerator = @this.GetEnumerator();
+            enumerator.MoveNext();
+            var prev = enumerator.Current;
+            int i = 0;
+            var answer = 0;
+            while (enumerator.MoveNext())
+            {
+                if (predicate(prev, enumerator.Current))
+                    answer++;
+                prev = enumerator.Current;
+                i++;
+            }
+            return answer;
+        }
+
         public static bool AnyAdjacentTwo<T>(this IEnumerable<T> @this, Func<T, T, T, bool> predicate)
         {
             var enumerator = @this.GetEnumerator();
@@ -92,6 +127,7 @@ namespace Common
             }
             return false;
         }
+
 
         public static IEnumerable<T> Replace<T>(this IEnumerable<T> @this, Func<T, bool> predicate, T replacement) =>
             @this.Select(x =>
@@ -131,5 +167,12 @@ namespace Common
 
         public static IEnumerable<T> TakeUpperHalf<T>(this IEnumerable<T> @this) =>
             @this.Skip(@this.Count() / 2);
+
+        public static bool AreContiguous(this IEnumerable<int> @this) =>
+            @this.AllAdjacent((prev, curr) => curr > prev);
+
+
+
+
     }
 }

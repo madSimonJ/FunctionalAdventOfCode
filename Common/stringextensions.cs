@@ -28,6 +28,11 @@ namespace Common
                 ? output
                 : (uint)0;
 
+        public static double ToDouble(this string @this) =>
+            double.TryParse(@this, out var output)
+                ? output
+                : (double)0;
+
 
         public static int CountOf(this string @this, params char[] characterList) =>
             @this.Count(x => characterList.Contains(x));
