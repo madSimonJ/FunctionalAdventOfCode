@@ -128,6 +128,20 @@ namespace Common
             return false;
         }
 
+        public static IEnumerable<TOut> SelectAdjacentWithDefault<TIn, TOut>(this IEnumerable<TIn> @this, Func<TIn, TIn, TOut> predicate)
+        {
+            var enumerator = @this.GetEnumerator();
+            enumerator.MoveNext();
+            var prev = enumerator.Current;
+            yield return predicate(default, prev);
+
+            while (enumerator.MoveNext())
+            {
+                yield return predicate(prev, enumerator.Current);
+                prev = enumerator.Current;
+            }
+        }
+
 
         public static IEnumerable<T> Replace<T>(this IEnumerable<T> @this, Func<T, bool> predicate, T replacement) =>
             @this.Select(x =>
